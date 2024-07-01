@@ -1,4 +1,5 @@
 from flask import Flask # type: ignore
+from flask_cors import CORS
 
 from config import Config
 from app.extensions import db
@@ -6,6 +7,9 @@ from app.extensions import db
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    CORS(app, resources={r'/*': {'origins': '*'}})
+    app.config['CORS_HEADERS'] = 'Content-Type'
+
 
     # Initialize Flask extensions here
     db.init_app(app)
